@@ -1,0 +1,38 @@
+{% load static %}
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+<div class="conatiner mt-3 mb-3 p-5">
+    <h3 class="text-center text-warning text-uppercase">All Testimonies</h3>
+    <div class="row mt-2 mb-2" style="flex-wrap: wrap;">
+        {% for testimony in testimonies%}
+        <div class="col-lg-3 mt-2 mb-3" >
+            <div class="card mt-2 mb-3"
+            style="box-shadow: 0px 4px 8px 0px #757575; border-radius: 20px;">
+                <div class="text-center">
+                    {% if testimony.image %}
+                     <img src="{{testimony.image.url}}" class="img-fluid "
+                    style="    width: 100px;
+                    height: 100px;
+                    border-radius: 50%;
+                    position: absolute;
+                    top: -50px;
+                    left: calc(50% - 50px)">
+                    {% else %}
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkrcL8cFPnM-rdQAFttfNSFdCLIyA3D9cNlQ&usqp=CAU" class="img-fluid "
+                    style="    width: 100px;
+                    height: 100px;
+                    border-radius: 50%;
+                    position: absolute;
+                    top: -50px;
+                    left: calc(50% - 50px)">
+                    {% endif %}
+                     </div>
+                <div class="card-body">
+                    <p class="card-text text-center font-italic text-muted p-4 mt-2 mb-2">{{testimony.testimony}}</p>
+                    <h6 class="card-text text-center text-info font-italic mb-2 mt-2 p-2 text-italic">{{testimony.name}}</h6>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+</div>

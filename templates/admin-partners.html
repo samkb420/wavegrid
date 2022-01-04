@@ -1,0 +1,92 @@
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://use.fontawesome.com/2d80d2893d.js"></script>
+    <title>Wavegrid Admin|partners</title>
+</head>
+<body>
+  <nav class="navbar navbar-light bg-light fixed-top ">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'admin' %}">Admin site</a>
+    </div>
+  </nav>
+  <div class="container">
+
+    <!-- ALL FEEDBACKS WITH DELETE OPTION ONLY -->
+    <div class="mt-2 mb-3">
+      <h3 class="text-center">All Partners</h3>
+    </div>
+    <div class="row mb-4 mt-3">
+
+       
+          {% for partner in company_obj %}
+          <div class="col-lg-3">
+              <div class="card mt-2 mb-2">
+                  <div class="card-body">
+                      <img src="{{partner.image.url}}" alt="" style="height: 100px; width: 200px;">
+                  </div> 
+                  <div>
+                    <a class="btn btn-outline-danger btn-lg ml-2 mb-2" href="{% url 'deletePartner' partner.id%}">Delete</a>
+                  </div>   
+              </div>
+            </div>
+          {% endfor %}
+        
+      </div>
+      <nav class="d-flex justify-content-center wow fadeIn">  
+        <ul class="pagination pg-blue">
+          {% if company_obj.has_previous %}  
+            <li class="page-item ">
+              <a class="page-link" href="?page={{ company_obj.previous_page_number }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+          {% endif %}
+            <li class="page-item active">
+              <a class="page-link" >{{ company_obj.number }}
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+          {% if company_obj.has_next %}  
+            <li class="page-item">
+              <a class="page-link" href="?page={{ company_obj.next_page_number }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
+    <!-- FORM FOR ADDING NEW PROJECTS -->
+    <div class="row mb-4 mt-3">
+      <div class="col">
+        <div class="card-body mt-4 mb-4">
+          <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="form-group">
+                  {{ partners|crispy }}
+              </div>
+              <div class="form-actions">
+                  <button class="btn btn-lg btn-secondary" type="submit">Add Partner</button>
+              </div>
+          </form>
+  </div>
+      </div>
+
+      </div> 
+      <!-- TABLE FOR DISPLAYING PROJECTS FROM DATABASE -->
+
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>

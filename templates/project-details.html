@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+    <script src="https://use.fontawesome.com/2d80d2893d.js"></script>
+    <title>Project Details</title>
+</head>
+<style>
+  body
+{
+background: url('https://vip-go.shutterstock.com/blog/wp-content/uploads/sites/5/2020/05/shutterstock_359492192.jpg?w=750');
+background-repeat: no-repeat;
+background-attachment: fixed;
+background-size: cover;
+}
+
+</style>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'home' %}"><strong>HOME</strong></a>
+        </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-7"
+        aria-controls="navbarSupportedContent-7" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent-7">
+        <ul class="navbar-nav ml-auto">
+          <!-- <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li> -->
+          <li class="nav-item active "><a class="nav-link" href="{% url 'all-projects' %}">Allprojects</a></li>
+        </ul>
+      </div>
+      </nav>
+    {% for project in projects %}
+    {% if project.video and not project.image %}
+    <video autoplay muted
+    class="d-block w-100">
+        <source src="{{project.video.url}}" type="video/mp4">
+    </video>
+{% elif project.image and not project.video %}    
+    <img src="{{project.image.url}}" alt="" class="d-block w-100 img-fluid">
+    {% elif project.image and project.video%}  
+    <video autoplay muted
+    class="d-block w-100">
+        <source src="{{project.video.url}}" type="video/mp4">
+    </video>  
+    <div >
+    <div class="col mt-2">
+        <img src="{{project.image.url}}" alt="" class="img-fluid w-100">
+    </div>
+  </div>
+{% endif %}    
+
+
+<div class="p-5">
+    <h5 class="text-uppercase text-center text-warning">Project details</h5>
+<div class="card mb-4" style="box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;">
+    <div class="card-body">
+        <h1 class="card-text">{{project.title}}</h1>
+        <p class="card-text">{{project.description}}</p>
+        <p class="card-text">
+          {% if project.completed %}
+
+    <p class="text-success">completed</p>
+{% else %}
+    <p class="text-danger">Ongoing</p>    
+{% endif %} 
+        </p>
+    </div>
+</div>
+<div class="container-fluid">
+  <h5 class="text-uppercase text-center text-warning">Project Gallery</h5>
+  <div class="row">
+    {% for pi in project.projectimages_set.all %}  
+    <div class="col-md-3 p-2 ">
+      <img src="{{pi.image.url}}" class="img-fluid w-100" alt="" style="object-fit: contain;">
+    </div>
+    {% endfor %}
+  </div>
+</div>
+</div>
+    {% endfor %}
+
+  
+
+    <footer class="text-white text-center text-lg-start bg-dark">
+        <!-- Grid container -->
+        <div class="container p-4">
+          <!--Grid row-->
+          <div class="row mt-4">
+            <!--Grid column-->
+            <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
+              <h5 class="text-uppercase mb-4">About company</h5>
+    
+              <p>
+                We are the waves to Grid your projects.
+              </p>
+    
+              <p>
+                Wavegrid architects is a visualization company founded in 2016 that has developed more than 
+                1000 high quality renderings, images and animations 
+                for clients in Kenya and around Africa.
+              </p>
+    
+              <div class="mt-4">
+                <!-- Facebook -->
+                <a type="button" class="btn btn-floating btn-lg"><i class="fab fa-facebook-f"></i></a>
+                <!-- Dribbble -->
+                <a type="button" class="btn btn-floating btn-lg"><i class="fa fa-instagram"></i></a>
+                <!-- Twitter -->
+                <a type="button" class="btn btn-floating btn-lg"><i class="fab fa-twitter"></i></a>
+                <!-- Google + -->
+                <!-- Linkedin -->
+              </div>
+            </div>
+            <!--Grid column-->
+    
+            <!--Grid column-->
+            <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+              <h5 class="text-uppercase mb-4 pb-1">Subscribe to Our Newsletter</h5>
+    
+              <div class="form-outline form-white mb-4">
+                <input type="text" id="formControlLg" class="form-control form-control-lg" placeholder="Your Email" />
+              </div>
+    
+              <ul class="list-unstyled fa-ul" style="margin-left: 1.65em;">
+                <li class="mb-3">
+                  <span class="fa-li"><i class="fas fa-home"></i></span><span class="ms-2">Nairobi, 00-967, Kenya</span>
+                </li>
+                <li class="mb-3">
+                  <span class="fa-li"><i class="fas fa-envelope"></i></span><span class="ms-2">wavegridarchitects@gmail.com</span>
+                </li>
+                <li class="mb-3">
+                  <span class="fa-li"><i class="fas fa-phone"></i></span><span class="ms-2">+ 254 707031397</span>
+                </li>
+              </ul>
+            </div>
+            <!--Grid column-->
+    
+            <!--Grid column-->
+            <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+              <h5 class="text-uppercase mb-4">Useful Links</h5>
+              <ul class="list-unstyled mb-0">
+                <li>About</li>
+                <li>Services</li>
+                <li>Portfolio</li>
+                <li>Contact</li>
+              </ul>
+            </div>
+            <!--Grid column-->
+          </div>
+          <!--Grid row-->
+        </div>
+        <!-- Grid container -->
+    
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+          © 2021 Copyright:
+          <a class="text-white" href="https://mdbootstrap.com/">Wavegrid Architects</a>
+          <a class="text-white" href="https://vicdevs.herokuapp.com/" target="blank">Designed by Vicdevs</a>
+        </div>
+        <!-- Copyright -->
+      </footer>
+<!-- Footer -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>

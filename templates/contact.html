@@ -1,0 +1,18 @@
+{% load crispy_forms_tags %}
+<div class="container p-5">
+    <h4 class=" text-center text-warning text-uppercase">Contact Us</h4>
+    <div class="row mb-4 mt-3">
+        <div class="card-body mt-4 mb-4">
+          <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="form-group text-warning">
+                  {{ form|crispy }}
+              </div>
+              <div class="form-actions">
+                  <button class="btn btn-lg btn-warning" type="submit">Send message</button>
+              </div>
+          </form>
+          </div>
+  </div>
+
+</div>

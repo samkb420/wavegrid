@@ -1,0 +1,204 @@
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://use.fontawesome.com/2d80d2893d.js"></script>
+    <title>Wavegrid Admin</title>
+</head>
+<body>
+  <nav class="navbar navbar-light bg-light fixed-top ">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'home' %}">Main site</a>
+    </div>
+  </nav>
+  <div class="container">
+    
+    <!-- ALL MESSAGES WITH DELETE OPTION ONLY -->
+    <div class="mt-5 mb-3"> <h3 class="text-center">All messages</h3></div>
+    <div class="row mb-4 mt-3">
+     
+       
+          {% for message in page_obj %}
+          <div class="col-lg-4">
+              <div class="card mt-2 mb-2">
+                  <div class="card-body">
+                      <h5 class="text-uppercase text-small card-text"><b>FROM: </b>{{ message.name}}</h5>
+                      <h5 class="card-text"><b>EMAIL: </b>{{ message.email }}</h5>
+                      <p class="card-text"><b>MESSAGE: </b>{{ message.message}}</p>
+                  </div> 
+                  <div>
+                    <a class="btn btn-outline-danger btn-lg ml-2 mb-2" href="{% url 'delete-message' message.id %}">Delete</a>
+                  </div>   
+              </div>
+            </div>
+          {% endfor %}
+       
+      </div>
+      <nav class="d-flex justify-content-center wow fadeIn">  
+        <ul class="pagination pg-blue">
+          {% if page_obj.has_previous %}  
+            <li class="page-item ">
+              <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+          {% endif %}
+            <li class="page-item active">
+              <a class="page-link" >{{ page_obj.number }}
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+          {% if page_obj.has_next %}  
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
+    <!-- ALL FEEDBACKS WITH DELETE OPTION ONLY -->
+    <div class="mt-2 mb-3">
+      <h3 class="text-center">All Testimonies</h3>
+    </div>
+    <div class="row mb-4 mt-3">
+
+       
+          {% for feedback in feedback_obj %}
+          <div class="col-lg-4">
+              <div class="card mt-2 mb-2">
+                  <div class="card-body">
+                      <h5 class="text-uppercase text-small card-text"><b>FROM: </b>{{ feedback.name}}</h5>
+                      <p class="card-text"><b>Testimony: </b>{{ feedback.testimony}}</p>
+                  </div> 
+                  <div>
+                    <a class="btn btn-outline-danger btn-lg ml-2 mb-2" href="{% url 'delete-feedback' feedback.id %}">Delete</a>
+                  </div>   
+              </div>
+            </div>
+          {% endfor %}
+        
+      </div>
+      <nav class="d-flex justify-content-center wow fadeIn">  
+        <ul class="pagination pg-blue">
+          {% if feedback_obj.has_previous %}  
+            <li class="page-item ">
+              <a class="page-link" href="?page={{ feedback_obj.previous_page_number }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+          {% endif %}
+            <li class="page-item active">
+              <a class="page-link" >{{ feedback_obj.number }}
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+          {% if feedback_obj.has_next %}  
+            <li class="page-item">
+              <a class="page-link" href="?page={{ feedback_obj.next_page_number }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
+    <!-- FORM FOR ADDING NEW PROJECTS -->
+    <div class="row mb-4 mt-3">
+      <div class="col-md-6">
+        <div class="card-body mt-4 mb-4">
+          <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="form-group">
+                  {{ form|crispy }}
+              </div>
+              <div class="form-actions">
+                  <button class="btn btn-lg btn-secondary" type="submit">Add Project</button>
+              </div>
+          </form>
+  </div>
+      </div>
+      <div class="col-md-6 text-center">
+        <div class="card-body mt-4 mb-4">
+              <div>
+                <a href="{% url 'adminpartners' %}">
+                  <button class="btn btn-lg btn-info" type="submit">Operate on Partners</button></a>
+              </div>
+  </div>
+      </div>
+
+      </div> 
+      <!-- TABLE FOR DISPLAYING PROJECTS FROM DATABASE -->
+      <div class="table-responsive">
+                <table class="table table-sm table-striped table-hover">
+                  <thead class=" thead-dark">
+                    <tr>
+                      <th scope="col">Image</th>
+                      <th scope="col">Title</th>
+                      <th scope="col">Status
+                      </th>
+                      <th scope="col">Update</th>
+                      <th scope="col">Delete</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for item in items %}
+                      <tr>
+                        <th scope="row">
+                          {% if item.video and not item.image %}
+                              <video autoplay muted loop
+                              style="height: 70px; width: 70px;">
+                                  <source src="{{item.video.url}}" type="video/mp4" class="rounded small-img" >
+                              </video>
+                          {% elif item.image and not item.video %}    
+                              <img src="{{item.image.url}}" alt=""  class="img-fluid rounded small-img" style="height: 70px; width: 70px;">
+                          {% elif item.image and item.video %}  
+                            <img src="{{item.image.url}}" alt=""  class="img-fluid rounded small-img" style="height: 70px; width: 70px;">    
+                          {% endif %}
+                          
+                        </th>
+                          <td>{{item.title}}</td>
+                          {% if item.completed == True%}
+                            <td>Completed</td>
+                          {% else %} 
+                           <td>Ongoing</td>
+                          {% endif %}
+                          <td><a class="btn btn-info btn-sm" href="{% url 'update_project' item.id %}">Update</a></td>
+                          <td><a class="btn btn-danger btn-sm" href="{% url 'delete-project' item.id %}">Delete</a></td>
+                          </tr>
+                
+                    {% endfor %}
+                  </tbody>
+                  </table>  
+                  <div>
+                    <div class="pagination align-items-center justify-content-center">
+                      <span class="step-links">
+                          {% if items.has_previous %}                                     <!--If there is a previous page-->
+                              <a class="btn btn-info btn-sm" href="?page={{ items.previous_page_number }}">&laquo;</a>  <!--Hyperlink to previous page on Click-->
+                          {% endif %}
+                  
+                          <span class="current">
+                               Page{{ items.number }} of {{ items.paginator.num_pages }}  <!--customers_list.number Is the current page number,customers_list.paginator.num_pages Is the total number of pages-->
+                          </span>
+                  
+                          {% if items.has_next %}    <!--If there is a next page-->
+                              <a class="btn btn-info btn-sm" href="?page={{ items.next_page_number }}">&raquo;</a>    <!--Hyperlink to next page when clicked-->
+                          {% endif %}
+                      </span>
+                  </div> 
+                </div>
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>

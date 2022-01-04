@@ -1,0 +1,41 @@
+<div class=" mt-3 mb-3 p-5">
+    
+    <div class="row no-gutters">
+        {% for project in projects %}
+        <div class="col-md-4 col-sm-12 padding-0" style="flex-wrap: wrap;">
+
+        {% if project.video and not project.image %}
+   
+        <a href="{% url 'project_details' project.id %}">
+            
+            <video autoplay muted loop style="height: 400px; width: 100%; object-fit: cover;" class="img.half_fade video-fluid">
+                <source src="{{project.video.url}}" type="video/mp4">
+            </video> 
+            <h4 class="text-white opacity_div" style="position: absolute; top: 0;left: 16px;">{{project.title}}</h4>
+            
+        </a>
+        {% elif project.image and not project.video %}
+        <a href="{% url 'project_details' project.id %}">    
+            <img src="{{project.image.url}}" alt="" style="height: 400px; width: 100%; background-color: #ffffff;" class="parent img-fluid">
+            <h4 class="text-white opacity_div" style="position: absolute; top: 0;left: 16px;">{{project.title}}</h4>
+            </a>
+        {% elif project.image and project.video %}  
+        <a href="{% url 'project_details' project.id %}"> 
+
+            <video autoplay muted loop style="height: 400px; width: 100%; object-fit: cover;" class="img.half_fade video-fluid">
+                <source src="{{project.video.url}}" type="video/mp4">
+            </video> 
+            <h4 class="text-white opacity_div" style="position: absolute; top: 0;left: 16px;">{{project.title}}</h4>
+            </a>
+          
+        {% endif %}
+    </div>
+
+{% endfor %}
+
+</div>
+<div class="mt-3 mb-3 text-center" style="margin: 0 auto;">
+    <a href="{% url 'all-projects' %}" style="text-decoration: none;">
+    <button class="btn btn-lg btn-warning">View Portfolio</button></a>
+</div>
+</div> 
