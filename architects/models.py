@@ -5,8 +5,8 @@ from django.core.validators import FileExtensionValidator
 # Create your models here.
 class Projects(models.Model):
     title = models.CharField(max_length=100, null=True, blank=True)
-    image = models.FileField(upload_to='media/images', null=True, blank=True)
-    video = models.FileField(upload_to='media/videos', null=True, blank=True)
+    image = models.FileField(upload_to='images', null=True, blank=True)
+    video = models.FileField(upload_to='videos', null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     client = models.CharField(max_length=300, null=True, blank=True)
     completed = models.BooleanField(default=True)
