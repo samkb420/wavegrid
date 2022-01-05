@@ -22,7 +22,7 @@ class Projects(models.Model):
 
 class ProjectImages(models.Model):
     project = models.ForeignKey(Projects, on_delete=models.CASCADE) 
-    image = models.ImageField(upload_to='media/images', blank=True, null=True) 
+    image = models.ImageField(upload_to='images', blank=True, null=True) 
 
     def __str__ (self):
         return self.project.title
@@ -36,7 +36,7 @@ class ProjectImages(models.Model):
 class Feedback(models.Model):
     name = models.CharField(max_length=200)
     testimony = models.TextField()
-    image = models.ImageField(upload_to='media/images', default="", blank=True, null=True)
+    image = models.ImageField(upload_to='images', default="", blank=True, null=True)
 
 
     def __str__ (self):
@@ -58,6 +58,6 @@ class Contact(models.Model):
         ordering = ('-id',) 
 
 class Partners(models.Model):
-    image = models.FileField(upload_to='media/images', null=True, blank=True)          
+    image = models.FileField(upload_to='images', null=True, blank=True)          
 
    
